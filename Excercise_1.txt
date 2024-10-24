@@ -1,0 +1,32 @@
+Initialize weight vector w arbitrarily (e.g., w = 0)
+Initialize the behavior policy π (e.g., 𝜖-greedy policy)
+Initialize target policy π' (e.g., deterministic policy that exploits Q)
+
+For each episode:
+    Initialize the starting state s
+    
+    Repeat for each step of the episode until the terminal state:
+        1. Choose action a from behavior policy π (e.g., 𝜖-greedy based on Q(s,a,w))
+        2. Take action a, observe reward r and next state s'
+        
+        3. Select next action a' from the target policy π' (e.g., π'(s') = argmax_a Q(s', a, w))
+        
+        4. Compute the feature vector ϕ(s, a) for state-action pair (s, a)
+        5. Compute the feature vector ϕ(s', a') for state-action pair (s', a')
+
+        6. Estimate the Q-value using the current weight vector w:
+            Q(s, a, w) = w^T * ϕ(s, a)
+            Q(s', a', w) = w^T * ϕ(s', a')
+
+        7. Compute the TD error (also known as the temporal difference):
+            δ = r + γ * Q(s', a', w) - Q(s, a, w)
+
+        8. Update the weight vector w:
+            w = w + α * δ * ϕ(s, a)
+
+        9. Set s ← s'
+    
+    Until s is terminal
+    
+End For
+
